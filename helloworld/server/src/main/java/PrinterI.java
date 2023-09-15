@@ -3,20 +3,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-public class PrinterI implements Demo.Printer
-{
+public class PrinterI implements Demo.Printer{
 
     String msgToSent = "";
-    public void printString(String s, com.zeroc.Ice.Current current)
-    {
+    public void printString(String s, com.zeroc.Ice.Current current){
         System.out.println(s);
 
         try{
-            String msg[] = s.split(":");
+            String[] msg = s.split(": ");
+            System.out.println("Has arrived");
             String inst = "";
-            if(msg[1].matches("[0-9]+")){
+            if(msg[1].matches("[0-9]+"))
                 primeNumber(Integer.parseInt(msg[1]));
-            }else if(msg[1].equalsIgnoreCase("listports")){
+            else if(msg[1].equalsIgnoreCase("listports")){
                 String temp[] = msg[1].split(" ");
                 inst = "nmap "+temp[1];
                 instruction(inst);
@@ -27,31 +26,47 @@ public class PrinterI implements Demo.Printer
                 inst = msg[1].substring(1);
                 if (msg.length > 2) {
                     String[] message = new String[msg.length - 2];
-                    for (int i = 2; i < msg.length; i++) {
+                    for (int i = 2; i < msg.length; i++) 
                         message[i - 2] = msg[i];
-                    }
-                    for (String elemento : message) {
+                    
+                    for (String elemento : message) 
                         inst += " "+elemento;
-                    }
+                    
                 }
                 instruction(inst);
             }
+        }catch(Exception e){
+            e.printStackTrace();
         }
-    
-        current.
+        System.out.println(msgToSent);
+       
     }
 
     private void instruction(String inst) throws IOException{
-        Process process = new ProcessBuilder(inst).start();
-        InputStream inputStream = process.getInputStream();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));   
-        String line;
-        StringBuilder output = new StringBuilder();
-        while ((line = reader.readLine()) != null) {
-            //System.out.println(line);
-            output.append(line).append("\n");
+        ProcessBuilder builder = new ProcessBuilder();
+        builder.command("bash", "-c", inst.toString()); // Para sistemas Windows
+
+        // Redirigir la salida estándar y el error estándar del proceso
+        builder.redirectErrorStream(true);
+
+        // Iniciar el proceso
+        Process proceso = builder.start();
+
+        // Obtener la salida del proceso
+        InputStream inputStream = proceso.getInputStream();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+        String linea;
+        while ((linea = reader.readLine()) != null) {
+            System.out.println(linea);
         }
-        msgToSent = output.toString();
+        try{
+            int exitCode = proceso.waitFor();
+            System.out.println("El comando terminó con código de salida: " + exitCode);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        
+        
     }
 
     private void primeNumber(int numero){
@@ -71,6 +86,7 @@ public class PrinterI implements Demo.Printer
                 while (numero % factor == 0) {
                     output.append(Integer.toString(factor)).append(" ");
                     numero /= factor;
+                    System.out.println(numero);
                 }
             }
             output.append("\n");

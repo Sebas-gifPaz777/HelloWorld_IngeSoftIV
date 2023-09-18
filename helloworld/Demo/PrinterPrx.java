@@ -17,22 +17,22 @@ package Demo;
 
 public interface PrinterPrx extends com.zeroc.Ice.ObjectPrx
 {
-    default String printString(String s)
+    default void printString(String s)
     {
-        return printString(s, com.zeroc.Ice.ObjectPrx.noExplicitContext);
+        printString(s, com.zeroc.Ice.ObjectPrx.noExplicitContext);
     }
 
-    default String printString(String s, java.util.Map<String, String> context)
+    default void printString(String s, java.util.Map<String, String> context)
     {
-        return _iceI_printStringAsync(s, context, true).waitForResponse();
+        _iceI_printStringAsync(s, context, true).waitForResponse();
     }
 
-    default java.util.concurrent.CompletableFuture<java.lang.String> printStringAsync(String s)
+    default java.util.concurrent.CompletableFuture<Void> printStringAsync(String s)
     {
         return _iceI_printStringAsync(s, com.zeroc.Ice.ObjectPrx.noExplicitContext, false);
     }
 
-    default java.util.concurrent.CompletableFuture<java.lang.String> printStringAsync(String s, java.util.Map<String, String> context)
+    default java.util.concurrent.CompletableFuture<Void> printStringAsync(String s, java.util.Map<String, String> context)
     {
         return _iceI_printStringAsync(s, context, false);
     }
@@ -44,14 +44,121 @@ public interface PrinterPrx extends com.zeroc.Ice.ObjectPrx
      * @param sync -
      * @return -
      **/
-    default com.zeroc.IceInternal.OutgoingAsync<java.lang.String> _iceI_printStringAsync(String iceP_s, java.util.Map<String, String> context, boolean sync)
+    default com.zeroc.IceInternal.OutgoingAsync<Void> _iceI_printStringAsync(String iceP_s, java.util.Map<String, String> context, boolean sync)
     {
-        com.zeroc.IceInternal.OutgoingAsync<java.lang.String> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "printString", null, sync, null);
-        f.invoke(true, context, null, ostr -> {
+        com.zeroc.IceInternal.OutgoingAsync<Void> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "printString", null, sync, null);
+        f.invoke(false, context, null, ostr -> {
                      ostr.writeString(iceP_s);
-                 }, istr -> {
+                 }, null);
+        return f;
+    }
+
+    default String reply()
+    {
+        return reply(com.zeroc.Ice.ObjectPrx.noExplicitContext);
+    }
+
+    default String reply(java.util.Map<String, String> context)
+    {
+        return _iceI_replyAsync(context, true).waitForResponse();
+    }
+
+    default java.util.concurrent.CompletableFuture<java.lang.String> replyAsync()
+    {
+        return _iceI_replyAsync(com.zeroc.Ice.ObjectPrx.noExplicitContext, false);
+    }
+
+    default java.util.concurrent.CompletableFuture<java.lang.String> replyAsync(java.util.Map<String, String> context)
+    {
+        return _iceI_replyAsync(context, false);
+    }
+
+    /**
+     * @hidden
+     * @param context -
+     * @param sync -
+     * @return -
+     **/
+    default com.zeroc.IceInternal.OutgoingAsync<java.lang.String> _iceI_replyAsync(java.util.Map<String, String> context, boolean sync)
+    {
+        com.zeroc.IceInternal.OutgoingAsync<java.lang.String> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "reply", null, sync, null);
+        f.invoke(true, context, null, null, istr -> {
                      String ret;
                      ret = istr.readString();
+                     return ret;
+                 });
+        return f;
+    }
+
+    default String replyTime()
+    {
+        return replyTime(com.zeroc.Ice.ObjectPrx.noExplicitContext);
+    }
+
+    default String replyTime(java.util.Map<String, String> context)
+    {
+        return _iceI_replyTimeAsync(context, true).waitForResponse();
+    }
+
+    default java.util.concurrent.CompletableFuture<java.lang.String> replyTimeAsync()
+    {
+        return _iceI_replyTimeAsync(com.zeroc.Ice.ObjectPrx.noExplicitContext, false);
+    }
+
+    default java.util.concurrent.CompletableFuture<java.lang.String> replyTimeAsync(java.util.Map<String, String> context)
+    {
+        return _iceI_replyTimeAsync(context, false);
+    }
+
+    /**
+     * @hidden
+     * @param context -
+     * @param sync -
+     * @return -
+     **/
+    default com.zeroc.IceInternal.OutgoingAsync<java.lang.String> _iceI_replyTimeAsync(java.util.Map<String, String> context, boolean sync)
+    {
+        com.zeroc.IceInternal.OutgoingAsync<java.lang.String> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "replyTime", null, sync, null);
+        f.invoke(true, context, null, null, istr -> {
+                     String ret;
+                     ret = istr.readString();
+                     return ret;
+                 });
+        return f;
+    }
+
+    default double latency()
+    {
+        return latency(com.zeroc.Ice.ObjectPrx.noExplicitContext);
+    }
+
+    default double latency(java.util.Map<String, String> context)
+    {
+        return _iceI_latencyAsync(context, true).waitForResponse();
+    }
+
+    default java.util.concurrent.CompletableFuture<java.lang.Double> latencyAsync()
+    {
+        return _iceI_latencyAsync(com.zeroc.Ice.ObjectPrx.noExplicitContext, false);
+    }
+
+    default java.util.concurrent.CompletableFuture<java.lang.Double> latencyAsync(java.util.Map<String, String> context)
+    {
+        return _iceI_latencyAsync(context, false);
+    }
+
+    /**
+     * @hidden
+     * @param context -
+     * @param sync -
+     * @return -
+     **/
+    default com.zeroc.IceInternal.OutgoingAsync<java.lang.Double> _iceI_latencyAsync(java.util.Map<String, String> context, boolean sync)
+    {
+        com.zeroc.IceInternal.OutgoingAsync<java.lang.Double> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "latency", null, sync, null);
+        f.invoke(true, context, null, null, istr -> {
+                     double ret;
+                     ret = istr.readDouble();
                      return ret;
                  });
         return f;

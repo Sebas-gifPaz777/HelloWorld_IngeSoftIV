@@ -17,7 +17,13 @@ package Demo;
 
 public interface Printer extends com.zeroc.Ice.Object
 {
-    String printString(String s, com.zeroc.Ice.Current current);
+    void printString(String s, com.zeroc.Ice.Current current);
+
+    String reply(com.zeroc.Ice.Current current);
+
+    String replyTime(com.zeroc.Ice.Current current);
+
+    double latency(com.zeroc.Ice.Current current);
 
     /** @hidden */
     static final String[] _iceIds =
@@ -57,9 +63,60 @@ public interface Printer extends com.zeroc.Ice.Object
         String iceP_s;
         iceP_s = istr.readString();
         inS.endReadParams();
-        String ret = obj.printString(iceP_s, current);
+        obj.printString(iceP_s, current);
+        return inS.setResult(inS.writeEmptyParams());
+    }
+
+    /**
+     * @hidden
+     * @param obj -
+     * @param inS -
+     * @param current -
+     * @return -
+    **/
+    static java.util.concurrent.CompletionStage<com.zeroc.Ice.OutputStream> _iceD_reply(Printer obj, final com.zeroc.IceInternal.Incoming inS, com.zeroc.Ice.Current current)
+    {
+        com.zeroc.Ice.Object._iceCheckMode(null, current.mode);
+        inS.readEmptyParams();
+        String ret = obj.reply(current);
         com.zeroc.Ice.OutputStream ostr = inS.startWriteParams();
         ostr.writeString(ret);
+        inS.endWriteParams(ostr);
+        return inS.setResult(ostr);
+    }
+
+    /**
+     * @hidden
+     * @param obj -
+     * @param inS -
+     * @param current -
+     * @return -
+    **/
+    static java.util.concurrent.CompletionStage<com.zeroc.Ice.OutputStream> _iceD_replyTime(Printer obj, final com.zeroc.IceInternal.Incoming inS, com.zeroc.Ice.Current current)
+    {
+        com.zeroc.Ice.Object._iceCheckMode(null, current.mode);
+        inS.readEmptyParams();
+        String ret = obj.replyTime(current);
+        com.zeroc.Ice.OutputStream ostr = inS.startWriteParams();
+        ostr.writeString(ret);
+        inS.endWriteParams(ostr);
+        return inS.setResult(ostr);
+    }
+
+    /**
+     * @hidden
+     * @param obj -
+     * @param inS -
+     * @param current -
+     * @return -
+    **/
+    static java.util.concurrent.CompletionStage<com.zeroc.Ice.OutputStream> _iceD_latency(Printer obj, final com.zeroc.IceInternal.Incoming inS, com.zeroc.Ice.Current current)
+    {
+        com.zeroc.Ice.Object._iceCheckMode(null, current.mode);
+        inS.readEmptyParams();
+        double ret = obj.latency(current);
+        com.zeroc.Ice.OutputStream ostr = inS.startWriteParams();
+        ostr.writeDouble(ret);
         inS.endWriteParams(ostr);
         return inS.setResult(ostr);
     }
@@ -71,7 +128,10 @@ public interface Printer extends com.zeroc.Ice.Object
         "ice_ids",
         "ice_isA",
         "ice_ping",
-        "printString"
+        "latency",
+        "printString",
+        "reply",
+        "replyTime"
     };
 
     /** @hidden */
@@ -105,7 +165,19 @@ public interface Printer extends com.zeroc.Ice.Object
             }
             case 4:
             {
+                return _iceD_latency(this, in, current);
+            }
+            case 5:
+            {
                 return _iceD_printString(this, in, current);
+            }
+            case 6:
+            {
+                return _iceD_reply(this, in, current);
+            }
+            case 7:
+            {
+                return _iceD_replyTime(this, in, current);
             }
         }
 

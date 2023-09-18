@@ -2,6 +2,9 @@ module Demo
 {
     interface Printer
     {
-        String printString(string s);
+        void printString(string s);
+        string reply();
+        string replyTime();
+        double latency();
     }
 }

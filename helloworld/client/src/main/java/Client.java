@@ -36,7 +36,7 @@ public class Client
             String[] entry;
             boolean conti = true;
             while(conti){
-                
+                    
                 msg = br.readLine();
 
                 entry = msg.split(" ");
@@ -45,9 +45,13 @@ public class Client
                 || msg.matches("[0-9]+") 
                 || (entry[0].equalsIgnoreCase("listports") && entry[1].matches("\\d\\d?\\d?\\.\\d\\d?\\d?\\.\\d\\d?\\d?\\.\\d\\d?\\d?"))
                 || msg.charAt(0) == '!'){
-
+                        
+                    double latency = System.currentTimeMillis();
                     printer.printString(user + "@" + hostname + ": " + msg);
-                    
+                        
+                    System.out.println(printer.reply());
+                    System.out.println(printer.replyTime());
+                    System.out.println(printer.latency()-latency);
 
                 }
             }

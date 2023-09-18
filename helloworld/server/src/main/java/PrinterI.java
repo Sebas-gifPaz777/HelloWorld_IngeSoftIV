@@ -6,9 +6,14 @@ import java.io.InputStreamReader;
 public class PrinterI implements Demo.Printer{
 
     String msgToSent = "";
+    double arriveTime;
+    double finalTime;
+    double latency;
     public void printString(String s, com.zeroc.Ice.Current current){
         System.out.println(s);
 
+
+        arriveTime = System.currentTimeMillis();
         try{
             String[] msg = s.split(": ");
             System.out.println("Has arrived");
@@ -35,10 +40,12 @@ public class PrinterI implements Demo.Printer{
                 }
                 instruction(inst);
             }
+
+            finalTime= System.currentTimeMillis();
         }catch(Exception e){
             e.printStackTrace();
         }
-        System.out.println(msgToSent);
+        System.out.println("Final");
        
     }
 
@@ -67,6 +74,18 @@ public class PrinterI implements Demo.Printer{
         }
         
         
+    }
+
+    public String reply(com.zeroc.Ice.Current current){
+        return msgToSent;
+    }
+
+    public String replyTime(com.zeroc.Ice.Current current){
+        return String.valueOf(arriveTime-finalTime);
+    }
+
+    public double latency(com.zeroc.Ice.Current current){
+        return arriveTime;
     }
 
     private void primeNumber(int numero){
